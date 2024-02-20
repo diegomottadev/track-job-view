@@ -7,17 +7,17 @@ import { DataTable } from 'primereact/datatable';
 import { InputText } from 'primereact/inputtext';
 import { Toast } from 'primereact/toast';
 import Error from '../../../components/Error';
-import ContactToolbar from './ContactToolbar';
-import { contactServiceInstance } from '../../../services/contacts/ContactService';
+import ApplicationToolbar from './ApplicationToolbar';
+import { applicationServiceInstance } from '../../../services/applications/ApplicationService';
 
-const ContactList = () => {
+const ApplicationList = () => {
     // Refs
     const dt = useRef(null);
     const toast = useRef();
 
     // Hooks
     const navigate = useNavigate();
-    const [contacts, setContacts] = useState(false);
+    const [applications, setApplications] = useState(false);
     const [loadingDatatable, setLoadingDatatable] = useState(false);
     const [totalRecords, setTotalRecords] = useState(0);
     const [showError, setShowError] = useState(false);
@@ -31,24 +31,22 @@ const ContactList = () => {
     const loadLazyData = useCallback(async () => {
         try {
             setLoadingDatatable(true);
-            const { data: { data: result, count: total } } = await contactServiceInstance.allContacts(lazyParams);
+            const { data: { data: result, count: total } } = await applicationServiceInstance.allApplications(lazyParams);
             setTotalRecords(total);
-            setContacts(result);
+            setApplications(result);
             setLoadingDatatable(false);
         } catch (err) {
             console.error(err);
-            console.warn('Hubo un problema con la carga del listado de contactos');
+            console.warn('Hubo un problema con la carga del listado de aplicaciones');
             setShowError(true);
             setLoadingDatatable(false);
         }
-    }, [lazyParams, setLoadingDatatable, setTotalRecords, setContacts, setShowError]);
-
+    }, [lazyParams, setLoadingDatatable, setTotalRecords, setApplications, setShowError]);
+    
     // Effects
     useEffect(() => {
         loadLazyData();
     }, [lazyParams,loadLazyData]);
-
-
 
 
     const onPage = (event) => {
@@ -63,16 +61,16 @@ const ContactList = () => {
         setLazyParams(_lazyParams);
     };
 
-    const onEditContact = (contactId) => {
-        navigate(`/contacts/${contactId}/edit`);
+    const onEditApplication = (contactId) => {
+        navigate(`/applications/${contactId}/edit`);
     };
 
     
-    const onDeleteContact = async (contactId) => {
+    const onDeleteApplication = async (contactId) => {
         try {
             const result = await Swal.fire({
                 title: '',
-                text: '¿Confirma eliminar el contacto permanentemente?',
+                text: '¿Confirma eliminar la aplicación permanentemente?',
                 showCancelButton: true,
                 confirmButtonText: `<i class="pi pi-check-circle"></i> Aceptar`,
                 cancelButtonText: `<i class="pi pi-ban"></i> Cancelar`,
@@ -81,7 +79,7 @@ const ContactList = () => {
             });
 
             if (result.isConfirmed) {
-                const roleDelete = await contactServiceInstance.deleteContact(contactId);
+                const roleDelete = await applicationServiceInstance.deleteContact(contactId);
                 toast.current.show({
                     severity: 'success',
                     summary: 'Éxito',
@@ -121,8 +119,8 @@ const ContactList = () => {
     const actionBodyTemplate = (rowData) => {
         return (
             <div className="actions">
-                <Button tooltip={"Editar"} tooltipOptions={{ position: 'top' }} icon="pi pi-pencil" className="p-button-raised p-button-success p-mr-2" onClick={() => onEditContact(rowData.id)} />
-                <Button tooltip={"Eliminar"} tooltipOptions={{ position: 'top' }} icon="pi pi-trash" className="p-button-raised p-button-danger p-mr-2" onClick={() => onDeleteContact(rowData.id)} />
+                <Button tooltip={"Editar"} tooltipOptions={{ position: 'top' }} icon="pi pi-pencil" className="p-button-raised p-button-success p-mr-2" onClick={() => onEditApplication(rowData.id)} />
+                <Button tooltip={"Eliminar"} tooltipOptions={{ position: 'top' }} icon="pi pi-trash" className="p-button-raised p-button-danger p-mr-2" onClick={() => onDeleteApplication(rowData.id)} />
             </div>
         );
     }
@@ -130,27 +128,28 @@ const ContactList = () => {
     // Render
     if (showError) {
         return (
-            <Error mensaje={'Hubo un problema con la carga del listado de contacts'}></Error>
+            <Error mensaje={'Hubo un problema con la carga del listado de aplicaciones'}></Error>
         );
     }
 
     return (
         <div>
-            <ContactToolbar params={lazyParams.search} />
+            <ApplicationToolbar params={lazyParams.search} />
             <div className="grid">
                 <div className="col-12">
                     <div className="card">
-                        <h5>Contacts</h5>
+                        <h5>Aplicaciones</h5>
                         <Toast ref={toast} />
-                        <DataTable ref={dt} value={contacts} lazy
+                        <DataTable ref={dt} value={applications} lazy
                             paginator first={lazyParams.first} rows={10} totalRecords={totalRecords} onPage={onPage}
                             loading={loadingDatatable}
                             className="p-datatable-gridlines" header={header}
                         >
-                            <Column field="name" header="Nombre" headerStyle={{ width: '14%', minWidth: '10rem' }}></Column>
-                            <Column field="email" header="Email" ></Column>
-                            <Column field="linkedin" header="LinkedIn" ></Column>
+                            <Column field="position" header="Puesto" headerStyle={{ width: '14%', minWidth: '10rem' }}></Column>
                             <Column field="company" header="Empresa" ></Column>
+                            <Column field="status" header="Estado" ></Column>
+                            <Column field="appliedDate" header="Fecha aplicada" ></Column>
+                            <Column field="contact.name" header="Contacto" ></Column>
                             <Column body={actionBodyTemplate}></Column>
                         </DataTable>
                     </div>
@@ -160,4 +159,4 @@ const ContactList = () => {
     );
 };
 
-export default ContactList;
+export default ApplicationList;
