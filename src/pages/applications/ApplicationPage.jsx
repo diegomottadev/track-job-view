@@ -7,7 +7,7 @@ const ApplicationPage = () => {
 
     return (
         <div >
-           <AppBreadcrumb meta={'Aplicaciones'} /> 
+           <AppBreadcrumb meta={'Postulaciones'} /> 
            <div className="layout-content">
              <ApplicationList />
            </div>

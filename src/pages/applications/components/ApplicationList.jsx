@@ -37,7 +37,7 @@ const ApplicationList = () => {
             setLoadingDatatable(false);
         } catch (err) {
             console.error(err);
-            console.warn('Hubo un problema con la carga del listado de aplicaciones');
+            console.warn('Hubo un problema con la carga del listado de postulaciones');
             setShowError(true);
             setLoadingDatatable(false);
         }
@@ -70,7 +70,7 @@ const ApplicationList = () => {
         try {
             const result = await Swal.fire({
                 title: '',
-                text: '¿Confirma eliminar la aplicación permanentemente?',
+                text: '¿Confirma eliminar la postulación permanentemente?',
                 showCancelButton: true,
                 confirmButtonText: `<i class="pi pi-check-circle"></i> Aceptar`,
                 cancelButtonText: `<i class="pi pi-ban"></i> Cancelar`,
@@ -128,7 +128,7 @@ const ApplicationList = () => {
     // Render
     if (showError) {
         return (
-            <Error mensaje={'Hubo un problema con la carga del listado de aplicaciones'}></Error>
+            <Error mensaje={'Hubo un problema con la carga del listado de postulaciones'}></Error>
         );
     }
 
@@ -138,7 +138,7 @@ const ApplicationList = () => {
             <div className="grid">
                 <div className="col-12">
                     <div className="card">
-                        <h5>Aplicaciones</h5>
+                        <h5>Postulaciones</h5>
                         <Toast ref={toast} />
                         <DataTable ref={dt} value={applications} lazy
                             paginator first={lazyParams.first} rows={10} totalRecords={totalRecords} onPage={onPage}

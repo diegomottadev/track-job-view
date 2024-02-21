@@ -93,7 +93,7 @@ const App = () => {
         {
 
             icon: 'pi pi-fw pi-users',
-            items: [{ label: 'Aplicaciones', icon: 'pi pi-fw pi-calendar-plus', to: '/applications' }]
+            items: [{ label: 'Postulaciones', icon: 'pi pi-fw pi-calendar-plus', to: '/applications' }]
         },
         {
 
