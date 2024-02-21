@@ -130,7 +130,7 @@ const ContactList = () => {
     // Render
     if (showError) {
         return (
-            <Error mensaje={'Hubo un problema con la carga del listado de contacts'}></Error>
+            <Error mensaje={'Hubo un problema con la carga del listado de contactos'}></Error>
         );
     }
 
@@ -140,7 +140,7 @@ const ContactList = () => {
             <div className="grid">
                 <div className="col-12">
                     <div className="card">
-                        <h5>Contacts</h5>
+                        <h5>Contactos</h5>
                         <Toast ref={toast} />
                         <DataTable ref={dt} value={contacts} lazy
                             paginator first={lazyParams.first} rows={10} totalRecords={totalRecords} onPage={onPage}

@@ -16,7 +16,7 @@ const ApplicationToolbar = ({params}) => {
     };
 
     const onExportToExcel = async () => {
-        const url = await applicationServiceInstance.exportContacts(params);
+        const url = await applicationServiceInstance.exportApplications(params);
         const filename = 'applications.xlsx'; // Nombre del archivo
         saveAs(url, filename); // Guardar el archivo en una ubicación específica
     };
