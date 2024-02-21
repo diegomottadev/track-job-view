@@ -73,11 +73,15 @@ const ApplicationList = () => {
     setLazyParams(_lazyParams);
   };
 
-  const onEditApplication = (contactId) => {
-    navigate(`/applications/${contactId}/edit`);
+  const onEditApplication = (applicationId) => {
+    navigate(`/applications/${applicationId}/edit`);
   };
 
-  const onDeleteApplication = async (contactId) => {
+  const onViewApplication = (applicationId) => {
+    navigate(`/applications/${applicationId}`);
+  };
+
+  const onDeleteApplication = async (applicationId) => {
     try {
       const result = await Swal.fire({
         title: "",
@@ -91,7 +95,7 @@ const ApplicationList = () => {
 
       if (result.isConfirmed) {
         const roleDelete = await applicationServiceInstance.deleteContact(
-          contactId
+          applicationId
         );
         toast.current.show({
           severity: "success",
@@ -146,6 +150,13 @@ const ApplicationList = () => {
             icon="pi pi-external-link"
             tooltipOptions={{ position: 'left' }} 
             tooltip={rowData.notes}
+          />
+          <Button
+            tooltip={"Ver"}
+            tooltipOptions={{ position: "top" }}
+            icon="pi pi-eye"
+            className="p-button-raised p-button-info p-mr-2"
+            onClick={() => onViewApplication(rowData.id)}
           />
           <Button
             tooltip={"Editar"}
@@ -215,6 +226,7 @@ const ApplicationList = () => {
         return null;
     }
   };
+  
   const actionStatusTemplate = (rowData) => {
     return <div>{getStatusTag(rowData.status)}</div>;
   };

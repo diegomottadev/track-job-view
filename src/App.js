@@ -33,6 +33,7 @@ import ContactPage from './pages/contacts/ContactPage';
 import ContactForm from './pages/contacts/form/ContactForm';
 import ApplicationPage from './pages/applications/ApplicationPage';
 import ApplicationForm from './pages/applications/form/ApplicationForm';
+import ApplicationDetail from './pages/applications/components/ApplicationDetail';
 
 
 
@@ -397,6 +398,8 @@ const App = () => {
                             <Route exact path="/applications" element={<ApplicationPage />} />
                             <Route exact path="/applications/new" element={<ApplicationForm />}  />
                             <Route exact path="/applications/:applicationId/edit" element={<ApplicationForm />} />
+                            <Route exact path="/applications/:applicationId" element={<ApplicationDetail />} />
+
                             <Route exact path="/roles" element={<RolePage />} />
                             <Route exact path="/roles/new" element={<RoleForm />}  />
                             <Route exact path="/roles/:roleId/edit" element={<RoleForm />} />

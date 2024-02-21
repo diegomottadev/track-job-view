@@ -79,9 +79,6 @@ export const ApplicationForm = () => {
     return urlPattern.test(url);
   };
 
-
-
-
   const parseDateString = (dateString) => {
     const [day, month, year] = dateString.split("/");
     return new Date(`${year}-${month}-${day}`);
